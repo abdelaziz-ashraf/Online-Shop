@@ -1,0 +1,99 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container">
+
+    <% if(orders.length === 0) { %>
+        <p class="alert alert-success">There is no orders</p>
+    <% }  %>
+
+
+    <% if(NoUser === true) { %>
+        <p class="alert alert-success">
+           No User Founded 
+        </p>
+    <% } %> 
+
+    <br>
+
+    <form action="/admin/orders/filterByStatus" method="post">
+        <table>
+            <tr>
+                <td>
+                    <select name="filter" class="form-control">
+                        <option value="All">All</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Sent">Sent</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </td> 
+                <td><input type="submit" value="Filter" class="btn btn-primary"></td>
+            </tr>
+        </table>
+    </form>
+
+    <br>
+    <form action="/admin/orders/filterByUser" method="post">
+        <% if (validationError) { %> 
+            <p class="alert alert-danger">
+              <%= validationError.msg %> 
+            </p>
+        <% } %> 
+        <table>
+            <tr>
+                <td><input type="email" name="email" placeholder="User Email" class="form-control"></td>
+                <td><input type="submit" value="Search" class="btn btn-primary"></td>
+            </tr>
+        </table>
+        
+    </form>
+
+    <br>
+        <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">no</th>
+                <th scope="col">Product name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < orders.length; i++) { %>
+                <tr>
+                    <th scope="row"><%= i+1 %> </th>
+                    <td><%= orders[i].productName %> </td>
+                    <td><%= orders[i].price %> </td>
+                    <td><%= orders[i].amount %></td>
+                    <td><%= orders[i].price * orders[i].amount %> $</td>
+                    
+                    <% if(orders[i].status !== 'Completed') { %> 
+                        <form action="/admin/order/changeStatus" method="post">
+                            <input type="hidden" name="orderId" value="<%= orders[i]._id %>">
+                            <td>
+                                <select name="status" class="form-control">
+                                    <% if(orders[i].status === 'Pending') { %>
+                                        <option selected value="Pending">Pending</option>
+                                        <option value="Sent">Sent</option>
+                                    <% } else { %> 
+                                        <option value="Pending">Pending</option>
+                                        <option selected value="Sent">Sent</option>
+                                    <% } %> 
+                                    <option value="Completed">Completed</option>
+                                </select>
+                            </td> 
+                            <td><input type="submit" value="Save" class="btn btn-success"></td>
+                        </form>
+                    <% } else { %> 
+                        <td><%= orders[i].status %></td>
+                    <% } %> 
+                </tr>
+            <% } %> 
+        </tbody>
+    </table>
+
+</div>
+
+<%- include('parts/footer') %>

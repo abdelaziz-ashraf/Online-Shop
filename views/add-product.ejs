@@ -1,0 +1,63 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container text-center">
+    <h3>Add Product</h3>
+    <form action="/admin/add" method="post" enctype="multipart/form-data">
+       
+        <input type="text" name="name" class="form-control" placeholder="Name">
+        <% let nameError = validationErrors.find(err => err.param === 'name') %> 
+        <% if(nameError) { %>
+            <p class="alert alert-danger">
+                <%= nameError.msg %> 
+            </p>
+        <% } %> 
+
+        <br>
+
+        <input type="number" name="price" class="form-control" placeholder="Price">
+        <% let priceError = validationErrors.find(err => err.param === 'price') %> 
+        <% if(priceError) { %>
+            <p class="alert alert-danger">
+                <%= priceError.msg %> 
+            </p>
+        <% } %> 
+
+        <br>
+
+        <input type="text" name="description" class="form-control" placeholder="Description">
+        <% let descriptionError = validationErrors.find(err => err.param === 'description') %> 
+        <% if(descriptionError) { %>
+            <p class="alert alert-danger">
+                <%= descriptionError.msg %> 
+            </p>
+        <% } %> 
+
+        <br>
+
+        <input type="text" name="category" class="form-control" placeholder="Category">
+        <% let categoryError = validationErrors.find(err => err.param === 'category') %> 
+        <% if(categoryError) { %>
+            <p class="alert alert-danger">
+                <%= categoryError.msg %> 
+            </p>
+        <% } %> 
+
+        <br>
+
+        <input type="file" name="image" class="form-control" >
+        <% let imageError = validationErrors.find(err => err.param === 'image') %> 
+        <% if(imageError) { %>
+            <p class="alert alert-danger">
+                <%= imageError.msg %> 
+            </p>
+        <% } %> 
+        
+        <br>
+
+        <input type="submit" value="Add Product" class="btn btn-primary">
+
+    </form>
+</div>
+
+<%- include('parts/footer') %>

@@ -1,0 +1,20 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container" style="margin-top: 50px;"> 
+    <% if(addressError) { %> 
+        <p class="alert alert-danger"><%= addressError.msg %> </p>
+    <% } %> 
+    <form action="/orders/addOrder" method="post">
+        <input type="text" name="address" placeholder="Enter Your Address">
+        <input type="hidden" name="name" value="<%= cart.name %>">
+        <input type="hidden" name="amount" value="<%= cart.amount %>">
+        <input type="hidden" name="price" value="<%= cart.price %>">
+        <input type="hidden" name="productId" value="<%= cart.productId %>">
+        <input type="hidden" name="cartId" value="<%= cart._id %>">
+        <br><br>
+        <input type="submit" value="Order">
+    </form>
+</div>
+
+<%- include('parts/footer') %>

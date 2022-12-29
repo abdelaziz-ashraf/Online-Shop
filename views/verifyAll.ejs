@@ -1,0 +1,15 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container" style="margin-top: 50px;"> 
+    <% if(addressError) { %> 
+        <p class="alert alert-danger"><%= addressError.msg %> </p>
+    <% } %> 
+    <form action="/orders/addAllOrders" method="post">
+        <input type="text" name="address" placeholder="Enter Your Address">
+        <br><br>
+        <input type="submit" value="Order">
+    </form>
+</div>
+
+<%- include('parts/footer') %>
